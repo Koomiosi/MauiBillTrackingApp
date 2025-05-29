@@ -24,13 +24,19 @@
         Padding="15, 15, 15, 15"  BackgroundColor="GreenYellow" TextColor="Black"/>-->
 
         <Label x:Name = "Loading_label" TextColor="Black" FontSize="24"  Grid.Row="1" Text="Ladataan laskuja..."/>
-
+        <Button
+            Text="Lisää lasku"
+            Clicked="OnAddNewBillClicked"
+            FontSize="24"
+            Margin="20"
+            BackgroundColor="DarkOrange"
+            TextColor="White"/>
         <Button Grid.Row="2" x:Name="selectBill" IsVisible="True" Text="Valitse lasku" Padding="20" FontSize="26"
-                Margin="40,10,40,10" Clicked="selectBill_Clicked" />
+                Margin="40,10,40,10"  />
 
         <!-- Vieritettävä sisältö -->
         <ScrollView Grid.Row="3">
-            <ListView x:Name="billList" ItemSelected="billList_ItemSelected" SelectionMode="Single" Margin="20, 0">
+            <ListView x:Name="billList"  SelectionMode="Single" Margin="20, 0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

@@ -1,4 +1,4 @@
-using BillTrackingAppBackend.Models;
+Ôªøusing BillTrackingAppBackend.Models;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -6,18 +6,24 @@ namespace MauiBillTrackingApp;
 
 public partial class AddNewBill : ContentPage
 {
-
-	public AddNewBill()
-	{
-		InitializeComponent();
-        
+    public AddNewBill()
+    {
+        InitializeComponent();
     }
 
-    private async Task AddBtn_Clicked(object sender, EventArgs e)
+    protected override void OnAppearing()
     {
-        if (string.IsNullOrEmpty(L‰hett‰j‰.Text))
+        base.OnAppearing();
+
+        if (TilaPicker.SelectedIndex == -1)
+            TilaPicker.SelectedIndex = 0;
+    }
+
+    private async void AddBtn_Clicked(object sender, EventArgs e)
+    {
+        if (string.IsNullOrEmpty(L√§hett√§j√§.Text))
         {
-            await DisplayAlert("Tieto puuttuu", "Anna l‰hett‰j‰", "Ok");
+            await DisplayAlert("Tieto puuttuu", "Anna l√§hett√§j√§", "Ok");
             return;
         }
 
@@ -29,40 +35,65 @@ public partial class AddNewBill : ContentPage
 
         if (!decimal.TryParse(Summa.Text, out decimal summa))
         {
-            await DisplayAlert("Virheellinen syˆte", "Syˆt‰ kelvollinen summa", "Ok");
+            await DisplayAlert("Virheellinen sy√∂te", "Sy√∂t√§ kelvollinen summa", "Ok");
             return;
         }
 
-        // Tarkista tila
-        if (TilaPicker.SelectedIndex == -1)
+        DateTime minimiEr√§p√§iv√§ = new DateTime(2000, 1, 1);
+        if (Er√§p√§iv√§Picker.Date <= minimiEr√§p√§iv√§)
         {
-            await DisplayAlert("Tieto puuttuu", "Valitse tila", "Ok");
+            await DisplayAlert("Tieto puuttuu", "Valitse kelvollinen er√§p√§iv√§", "Ok");
             return;
         }
 
-        // Tarkista er‰p‰iv‰ ñ k‰yt‰ j‰rkev‰‰ minimiarvoa
-        DateTime minimiEr‰p‰iv‰ = new DateTime(2000, 1, 1);
-        if (Er‰p‰iv‰Picker.Date <= minimiEr‰p‰iv‰)
+        try
         {
-            await DisplayAlert("Tieto puuttuu", "Valitse kelvollinen er‰p‰iv‰", "Ok");
-            return;
+            BillTracking newBill = new BillTracking
+            {
+                L√§hett√§j√§ = L√§hett√§j√§.Text,
+                Summa = summa,
+                Er√§p√§iv√§ = Er√§p√§iv√§Picker.Date,
+                Tila = TilaPicker.SelectedItem?.ToString() ?? "Avoin"
+            };
+
+            var input = JsonConvert.SerializeObject(newBill);
+            HttpContent content = new StringContent(input, Encoding.UTF8, "application/json");
+
+            using var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+
+            using var client = new HttpClient(handler);
+            client.BaseAddress = new Uri("https://10.0.2.2:7234");
+
+            var res = await client.PostAsync("/api/BillTrackings", content);
+
+            if (res.IsSuccessStatusCode)
+            {
+                L√§hett√§j√§.Text = "";
+                Summa.Text = "";
+                Er√§p√§iv√§Picker.Date = DateTime.Today;
+                TilaPicker.SelectedIndex = 0;
+
+                await DisplayAlert("Onnistui", "Lasku lis√§tty", "Ok");
+
+                // P√§ivit√§ p√§√§sivu
+                if (Shell.Current.CurrentPage is MainPage mainPage)
+                {
+                    await mainPage.LoadDataFromRestAPI();
+                }
+
+                // Palaa modaalista
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                string errorMsg = await res.Content.ReadAsStringAsync();
+                await DisplayAlert("Virhe palvelimelta", $"Status: {res.StatusCode}\n{errorMsg}", "OK");
+            }
         }
-
-        // Luodaan uusi lasku
-        BillTracking newBill = new BillTracking
+        catch (Exception ex)
         {
-            L‰hett‰j‰ = L‰hett‰j‰.Text,
-            Summa = summa,
-            Er‰p‰iv‰ = Er‰p‰iv‰Picker.Date,
-            Tila = TilaPicker.SelectedItem.ToString()
-        };
-
-        // Tallenna lasku esim. tietokantaan (t‰h‰n oma logiikka)
-        // await SaveBillAsync(newBill);
-
-        await DisplayAlert("Onnistui", "Lasku lis‰tty", "Ok");
+            await DisplayAlert("Virhe", $"Poikkeus tapahtui:\n{ex.Message}", "OK");
+        }
     }
-
-
-
 }

@@ -18,19 +18,19 @@
         </Frame>
 
         <VerticalStackLayout Grid.Row="1">
-            <Entry x:Name="Lähettäjä" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5" Placeholder="Laskun lähettäjä" />
-            <Entry x:Name="Summa" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5" Placeholder="Summa" />
-            <DatePicker x:Name="EräpäiväPicker" />
-            <Picker x:Name="TilaPicker" Title="Valitse tila"> 
+            <Entry x:Name="Lähettäjä"  FontSize="26" Margin="20,5,20,5" Placeholder="Laskun lähettäjä" />
+            <Entry x:Name="Summa"  FontSize="26" Margin="20,5,20,5" Placeholder="Summa" />
+            
+            <DatePicker x:Name="EräpäiväPicker" Format="Eräpäivä" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5"/>
+            <Picker x:Name="TilaPicker" Title="Valitse tila" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5"> 
                 <Picker.Items>
                     <x:String>Avoin</x:String>
                     <x:String>Maksettu</x:String>
                     <x:String>Myöhässä</x:String>
                 </Picker.Items>
             </Picker>
-            <Entry x:Name="Maksupäivä" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5" Placeholder="Maksupäivä" />
-
-            <Button x:Name="AddBtn" Clicked="AddBtn_Clicked" FontSize="26" Text="Tallenna" Padding="40" Margin="20,50,20,20" />
+            
+            <Button x:Name="AddBtn" Clicked="AddBtn_Clicked" FontSize="26" Text="Lisää lasku" Padding="40" Margin="20,50,20,20" />
         </VerticalStackLayout>
 
         

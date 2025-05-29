@@ -4,12 +4,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MauiBillTrackingApp"
-    Shell.FlyoutBehavior="Disabled"
-    Title="MauiBillTrackingApp">
+    Shell.FlyoutBehavior="Disabled">
 
+    <TabBar>
+        <ShellContent
+            Title="Laskut"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+    </TabBar>
+
+    <!-- Määritä reititys modaalikäyttöön -->
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+        ContentTemplate="{DataTemplate local:AddNewBill}"
+        Route="AddNewBill"
+        IsVisible="False" />
 </Shell>
