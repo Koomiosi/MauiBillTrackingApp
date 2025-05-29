@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBillTrackingApp.AddNewBill"
+             Title="AddNewBill">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" BackgroundColor="Black" Padding="20" BorderColor="Black" CornerRadius="0">
+            <Label Text="Uuden laskun lisäys" HorizontalTextAlignment="Center"
+       TextColor="Orange" FontSize="24"/>
+        </Frame>
+
+        <VerticalStackLayout Grid.Row="1">
+            <Entry x:Name="Lähettäjä" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5" Placeholder="Laskun lähettäjä" />
+            <Entry x:Name="Summa" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5" Placeholder="Summa" />
+            <DatePicker x:Name="EräpäiväPicker" />
+            <Picker x:Name="TilaPicker" Title="Valitse tila"> 
+                <Picker.Items>
+                    <x:String>Avoin</x:String>
+                    <x:String>Maksettu</x:String>
+                    <x:String>Myöhässä</x:String>
+                </Picker.Items>
+            </Picker>
+            <Entry x:Name="Maksupäivä" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5" Placeholder="Maksupäivä" />
+
+            <Button x:Name="AddBtn" Clicked="AddBtn_Clicked" FontSize="26" Text="Tallenna" Padding="40" Margin="20,50,20,20" />
+        </VerticalStackLayout>
+
+        
+
+    </Grid>
+    
+</ContentPage>
