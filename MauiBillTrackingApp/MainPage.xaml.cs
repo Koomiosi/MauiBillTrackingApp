@@ -23,26 +23,30 @@ public partial class MainPage : ContentPage
         {
             Loading_label.IsVisible = true;
 
-            HttpClientHandler handler = new HttpClientHandler
+            var handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
             };
 
-            HttpClient client = new HttpClient(handler)
+            var client = new HttpClient(handler)
             {
                 BaseAddress = new Uri("https://10.0.2.2:7234/")
             };
 
             string json = await client.GetStringAsync("api/BillTrackings");
 
-            IEnumerable<BillTracking> ienumBillList = JsonConvert.DeserializeObject<BillTracking[]>(json);
-            ObservableCollection<BillTracking> BillList = new ObservableCollection<BillTracking>(ienumBillList);
+            var allBills = JsonConvert.DeserializeObject<List<BillTracking>>(json);
 
-            billList.ItemsSource = BillList;
+            // Suodatetaan VAIN avoimet laskut MainPagea varten
+            var openBills = new ObservableCollection<BillTracking>(
+                allBills.Where(b => b.Tila == "Avoin")
+            );
+
+            billList.ItemsSource = openBills;
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", ex.Message, "OK");
+            await DisplayAlert("Virhe", ex.Message, "OK");
         }
         finally
         {
@@ -55,13 +59,25 @@ public partial class MainPage : ContentPage
         await Shell.Current.GoToAsync(nameof(AddNewBill), true); // true = modaalina
     }
 
-    private void selectBill_Clicked(object sender, EventArgs e)
+    private async void billList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-
+        if (e.SelectedItem is BillTracking bill)
+        {
+            string json = JsonConvert.SerializeObject(bill);
+            await Shell.Current.GoToAsync($"{nameof(UpdateBill)}?bill={Uri.EscapeDataString(json)}", true);
+        }
     }
 
-    private void billList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    private async void selectBill_Clicked(object sender, EventArgs e)
     {
-
+        if (billList.SelectedItem is BillTracking bill)
+        {
+            string json = JsonConvert.SerializeObject(bill);
+            await Shell.Current.GoToAsync($"{nameof(UpdateBill)}?bill={Uri.EscapeDataString(json)}", true);
+        }
+        else
+        {
+            await DisplayAlert("Huomio", "Valitse lasku listalta ensin", "OK");
+        }
     }
 }

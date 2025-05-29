@@ -7,6 +7,10 @@
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(AddNewBill), typeof(AddNewBill));
+
+            Routing.RegisterRoute(nameof(UpdateBill), typeof(UpdateBill));
+
+            Routing.RegisterRoute(nameof(PaidBillsPage), typeof(PaidBillsPage));
         }
     }
 }

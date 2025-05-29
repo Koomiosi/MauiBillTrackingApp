@@ -11,11 +11,21 @@
             Title="Laskut"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
+
+        <ShellContent
+        Title="Maksetut"
+        ContentTemplate="{DataTemplate local:PaidBillsPage}"
+        Route="PaidBillsPage" />
     </TabBar>
 
     <!-- Määritä reititys modaalikäyttöön -->
     <ShellContent
         ContentTemplate="{DataTemplate local:AddNewBill}"
         Route="AddNewBill"
+        IsVisible="False" />
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:UpdateBill}"
+        Route="UpdateBill"
         IsVisible="False" />
 </Shell>

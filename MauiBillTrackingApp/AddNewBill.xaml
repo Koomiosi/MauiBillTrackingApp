@@ -21,8 +21,8 @@
             <Entry x:Name="Lähettäjä"  FontSize="26" Margin="20,5,20,5" Placeholder="Laskun lähettäjä" />
             <Entry x:Name="Summa"  FontSize="26" Margin="20,5,20,5" Placeholder="Summa" />
             
-            <DatePicker x:Name="EräpäiväPicker" Format="Eräpäivä" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5"/>
-            <Picker x:Name="TilaPicker" Title="Valitse tila" BackgroundColor="DarkViolet" TextColor="Aquamarine" FontSize="26" Margin="20,5,20,5"> 
+            <DatePicker x:Name="EräpäiväPicker" Format="Eräpäivä" FontSize="26" Margin="20,5,20,5"/>
+            <Picker x:Name="TilaPicker" Title="Valitse tila" FontSize="26" Margin="20,5,20,5"> 
                 <Picker.Items>
                     <x:String>Avoin</x:String>
                     <x:String>Maksettu</x:String>

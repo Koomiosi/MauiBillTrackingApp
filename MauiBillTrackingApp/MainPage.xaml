@@ -31,7 +31,14 @@
             Margin="20"
             BackgroundColor="DarkOrange"
             TextColor="White"/>
-        <Button Grid.Row="2" x:Name="selectBill" IsVisible="True" Text="Valitse lasku" Padding="20" FontSize="26"
+        
+        <Button Grid.Row="2" 
+                x:Name="selectBill"
+                Clicked="selectBill_Clicked"
+                IsVisible="True" 
+                Text="Valitse lasku" 
+                Padding="20" 
+                FontSize="26"
                 Margin="40,10,40,10"  />
 
         <!-- Vieritettävä sisältö -->
