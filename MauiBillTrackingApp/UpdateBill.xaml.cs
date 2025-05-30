@@ -81,4 +81,39 @@ public partial class UpdateBill : ContentPage
         }
     }
 
+    private async void OnDeleteClicked(object sender, EventArgs e)
+    {
+        bool confirm = await DisplayAlert("Vahvista poisto", "Haluatko varmasti poistaa tämän laskun?", "Poista", "Peruuta");
+
+        if (!confirm || _bill == null)
+            return;
+
+        try
+        {
+            using var client = new HttpClient(new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (msg, cert, chain, errors) => true
+            });
+
+            client.BaseAddress = new Uri("https://10.0.2.2:7234");
+
+            var response = await client.DeleteAsync($"api/BillTrackings/{_bill.BillId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("Poistettu", "Lasku poistettu onnistuneesti", "OK");
+                await Shell.Current.GoToAsync(".."); // palaa takaisin
+            }
+            else
+            {
+                string error = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Virhe", $"Poistaminen epäonnistui: {error}", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Virhe", $"Poikkeus tapahtui: {ex.Message}", "OK");
+        }
+    }
+
 }
