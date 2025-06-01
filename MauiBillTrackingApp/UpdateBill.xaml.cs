@@ -26,6 +26,10 @@ public partial class UpdateBill : ContentPage
                 Er‰p‰iv‰Picker.Date = _bill.Er‰p‰iv‰;
                 TilaPicker.SelectedItem = _bill.Tila;
             }
+            if (_bill.Maksup‰iv‰.HasValue)
+            {
+                Maksup‰iv‰Picker.Date = _bill.Maksup‰iv‰.Value;
+            }
         }
     }
 
@@ -48,6 +52,7 @@ public partial class UpdateBill : ContentPage
         _bill.L‰hett‰j‰ = L‰hett‰j‰Entry.Text;
         _bill.Summa = summa;
         _bill.Er‰p‰iv‰ = Er‰p‰iv‰Picker.Date;
+        _bill.Maksup‰iv‰ = Maksup‰iv‰Picker.Date;
         _bill.Tila = TilaPicker.SelectedItem?.ToString();
 
         try
