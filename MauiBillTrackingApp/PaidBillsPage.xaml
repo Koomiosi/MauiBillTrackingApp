@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBillTrackingApp.PaidBillsPage"
+             Title="Maksetut laskut">
+
+    <Grid RowDefinitions="Auto,*">
+        <Label Text="Maksetut laskut"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               Margin="0,10" />
+
+        <CollectionView x:Name="PaidList" Margin="10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Gray" CornerRadius="5" Padding="10" Margin="5">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Lähettäjä}" FontAttributes="Bold" />
+                            <Label Text="{Binding Summa, StringFormat='Summa: {0:C}'}" />
+                            <Label Text="{Binding Eräpäivä, StringFormat='Eräpäivä: {0:dd.MM.yyyy}'}" />
+                            <Label Text="{Binding Tila}" TextColor="Green" />
+                            <Label Text="{Binding Maksupäivä, StringFormat='Maksupäivä: {0:dd.MM.yyyy}'}" />
+                            <Button Text="Poista"
+                            TextColor="White"
+                            BackgroundColor="Red"
+                            Clicked="OnDeleteBillClicked"
+                            CommandParameter="{Binding}" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

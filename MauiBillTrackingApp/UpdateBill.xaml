@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiBillTrackingApp.UpdateBill"
+             Title="Muokkaa laskua">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="Lähettäjä" />
+        <Entry x:Name="LähettäjäEntry" Placeholder="Lähettäjä" FontSize="20"/>
+        <Label Text="Summa" />
+        <Entry x:Name="SummaEntry" Placeholder="Summa" FontSize="20" Keyboard="Numeric"/>
+        <Label Text="Eräpäivä" />
+        <DatePicker x:Name="EräpäiväPicker" Format="dd.MM.yyy" FontSize="20"/>
+        <Label Text="Maksupäivä" />
+        <DatePicker x:Name="MaksupäiväPicker" Format="dd.MM.yyyy" />
+        <Label Text="Tila" />
+        <Picker x:Name="TilaPicker" Title="Valitse tila" FontSize="20">
+            <Picker.Items>
+                <x:String>Avoin</x:String>
+                <x:String>Maksettu</x:String>
+                <x:String>Myöhässä</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <Button Text="Tallenna muutokset" Clicked="OnSaveClicked" FontSize="20" BackgroundColor="Orange" TextColor="White" />
+
+        <Button 
+    Text="Poista lasku"
+    BackgroundColor="Red"
+    TextColor="White"
+    CornerRadius="5"
+    Padding="10"
+    Clicked="OnDeleteClicked"
+    Margin="0,20,0,0"/>
+        
+    </VerticalStackLayout>
+
+</ContentPage>
